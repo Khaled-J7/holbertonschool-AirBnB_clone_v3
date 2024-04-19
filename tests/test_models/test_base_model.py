@@ -73,17 +73,16 @@ class TestBaseModel(unittest.TestCase):
         value."""
         tic = datetime.now()
         inst1 = BaseModel()
+        time.sleep(0.001)  # Sleep for a short duration to ensure time difference
         toc = datetime.now()
-        self.assertTrue(tic <= inst1.created_at <= toc)
-        time.sleep(1e-4)
-        tic = datetime.now()
+        self.assertTrue(tic <= inst1.created_at <= toc)  # Check if created_at is within the time range
         inst2 = BaseModel()
-        toc = datetime.now()
-        self.assertTrue(tic <= inst2.created_at <= toc)
-        self.assertEqual(inst1.created_at, inst1.updated_at)
-        self.assertEqual(inst2.created_at, inst2.updated_at)
-        self.assertNotEqual(inst1.created_at, inst2.created_at)
-        self.assertNotEqual(inst1.updated_at, inst2.updated_at)
+        self.assertTrue(tic <= inst2.created_at <= toc)  # Check if created_at is within the time range
+        self.assertEqual(inst1.created_at, inst1.updated_at)  # Check if created_at and updated_at are identical
+        self.assertEqual(inst2.created_at, inst2.updated_at)  # Check if created_at and updated_at are identical
+        self.assertNotEqual(inst1.created_at, inst2.created_at)  # Check if created_at of different instances are different
+        self.assertNotEqual(inst1.updated_at, inst2.updated_at)  # Check if updated_at of different instances are different
+
 
     def test_uuid(self):
         """Test that id is a valid uuid"""
